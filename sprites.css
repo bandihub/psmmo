@@ -196,3 +196,99 @@
 	height: 19px;
 	background: url(./sprites.png) -563px -1312px;
 }
+.sprite33, .sprite-33 {
+	/* cave */
+	width: 238px;
+	height: 177px;
+	background: url(./sprites.png) -6px -423px;
+}
+.sprite34, .sprite-34 {
+	/* plant bins */
+	width: 98px;
+	height: 105px;
+	background: url(./sprites.png) -1314px -375px;
+}
+.sprite35, .sprite-35 {
+	/* cave end */
+	width: 49px;
+	height: 55px;
+	background: url(./sprites.png) -111px -1424px;
+}
+.sprite36, .sprite-36 {
+	/* cave1 */
+	width: 34px;
+	height: 27px;
+	background: url(./sprites.png) -325px -1446px;
+}
+.sprite37, .sprite-37 {
+	/* cut */
+	width: 23px;
+	height: 16px;
+	background: url(./sprites.png) -508px -1339px;
+}
+.sprite38, .sprite-38 {
+	/* mew */
+	width: 19px;
+	height: 35px;
+	background: url(./sprites.png) -199px -892px;
+}
+.sprite39, .sprite-39 {
+	/* water */
+	width: 39px;
+	height: 32px;
+	background: url(./sprites.png) -1193px -976px;
+}
+.sprite40, .sprite-40 {
+	/* beach umb 1 */
+	width: 42px;
+	height: 42px;
+	background: url(./sprites.png) -968px -812px;
+}
+.sprite41, .sprite-41 {
+	/* beach umb 2 */
+	width: 41px;
+	height: 43px;
+	background: url(./sprites.png) -972px -771px;
+}
+.sprite42, .sprite-42 {
+	/* fence1 */
+	width: 24px;
+	height: 30px;
+	background: url(./sprites.png) -418px -413px;
+}
+.sprite43, .sprite-43 {
+	/* fence2 */
+	width: 45px;
+	height: 21px;
+	background: url(./sprites.png) -378px -428px;
+}
+.sprite44, .sprite-44 {
+	/* fence3 */
+	width: 17px;
+	height: 21px;
+	background: url(./sprites.png) -362px -426px;
+}
+.sprite45, .sprite-45 {
+	/* flowerpower */
+	width: 20px;
+	height: 27px;
+	background: url(./sprites.png) -59px -951px;
+}
+.sprite46, .sprite-46 {
+	/* bridge */
+	width: 46px;
+	height: 164px;
+	background: url(./sprites.png) -1792px -909px;
+}
+.sprite47, .sprite-47 {
+	/* bridge2 */
+	width: 156px;
+	height: 45px;
+	background: url(./sprites.png) -1415px -950px;
+}
+.sprite48, .sprite-48 {
+	/* whatever */
+	width: 132px;
+	height: 93px;
+	background: url(./sprites.png) -1321px -510px;
+}

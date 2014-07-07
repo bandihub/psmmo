@@ -554,6 +554,7 @@ var client = {
 		this.rooms[roomid] = room;
 	},
 	send: function (data, room) {
+		if (data.split("/leave").length - 1 > 0) vars.me.encounteredMon = false;
 		if (room && room !== 'lobby' && room !== true) {
 			data = room+'|'+data;
 		} else if (room !== true) {

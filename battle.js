@@ -524,7 +524,7 @@ var Battle = function(roomid, type, nojoin) {
 					if (who == "opp") dead = ""; //they can't have an alive class on the opponents team bcos then u can click there shit and it'll cause you to switch to the slot clicked which is bad
 					if (Math.ceil(user.mons[i].currentHP) == 0) dead = " dead";
 					var s = ((!user.mons[i].mon && Math.floor(user.mons[i].mon) !== 0) ? mon : user.mons[i].mon);
-					insides += '<span onmouseover="vars.tooltip(\'monicon\', ' + s + ', \'' + this.id + '\');" onmouseout="vars.tooltip();" class="col iconcol' + dead + '" id="' + s + '-' + roomid + '" style="width: 32px;height: 24px;' + Tools.getIcon(info) + '"></span>'
+					insides += '<span onmouseover="vars.tooltip(\'monicon\', ' + s + ', this, \'' + this.id + '\');" onmouseout="vars.tooltip();" class="col iconcol' + dead + '" id="' + s + '-' + roomid + '" style="width: 32px;height: 24px;' + Tools.getIcon(info) + '"></span>'
 					mon++;
 				}
 				if (who == "you") insides += '<button onclick="client.send(\'/undo\', \'' + this.id + '\');$(this).hide();client.rooms[\'' + this.id + '\'].decision = undefined;" class="cancelbutton">Cancel</button>';
@@ -676,6 +676,7 @@ var Battle = function(roomid, type, nojoin) {
 				vars.me.encounteredMon = false;
 				if (vars.me.money < 0) vars.me.money = 0;
 				this.toTimeline({event: row[0], msg: "You " + ((plusorminus == 1) ? "won" : "lost") + ". You now have $" + vars.me.money + "."});
+				this.battle.finished = true;
 			} else if (row[0] == "request") {
 				var objecto = (JSON.parse(row[1]));
 				for (var i in objecto) this.battle[i] = objecto[i];

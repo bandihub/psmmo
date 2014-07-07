@@ -86,7 +86,7 @@ vars.tooltip = function(type, value, el) {
 	}
 	if (type == "monicon") {
 		var slot = value,
-			room = client.rooms[arguments[2]];
+			room = client.rooms[arguments[3]];
 		var species = room.battle.side.pokemon[slot].details;
 		insides += species;
 	}
@@ -104,6 +104,72 @@ vars.me.updateExp = function(el, slot, funk, t) {
 	var width = vars.me.team[slot].exp / vars.me.team[slot].nextLevelExp * 100;
 	$(el)[funk]({"width": width + "%"}, t);
 };
+vars.me.checkEvolve = function(monKey) {
+	var mon = vars.me.team[monKey];
+	var pokemon = BattlePokedex[toId(mon.species)];
+	if (pokemon.evos && pokemon.evos.length) {
+		for (var i in pokemon.evos) {
+			var evolution = BattlePokedex[pokemon.evos[i]];
+			if (mon.level >= evolution.evoLevel) {
+				var evolveOrNaw = confirm("Your " + mon.species + " would like to evolve into a " + evolution.species + ".");
+				if (evolveOrNaw) {
+					vars.me.team[monKey].species = evolution.species;
+				}
+			}
+		}
+	}
+};
+vars.me.learnMove = function(move, monKey, replaceMove) {
+	var mon = vars.me.team[monKey];
+	if (!replaceMove) {
+		mon.moves.push(move);
+	} else {
+		var replacementKey = 0;
+		for (var i in mon.moves) if (i == replaceMove) replacementKey = i;
+		mon.moves[replacementKey] = move;
+	}
+};
+vars.me.checkLearnMove = function(monKey) {
+	var mon = vars.me.team[monKey];
+	var learnset = BattleLearnsets[toId(mon.species)].learnset;
+	for (var i in learnset) {
+		var move = BattleMovedex[i];
+		var whenLearned = learnset[i];
+		if (whenLearned.length) {
+			for (var x in whenLearned) {
+				var learnByLevel = whenLearned[x].split('L');
+				if (learnByLevel.length - 1 > 0) {
+					var levelLearned = Math.abs(learnByLevel[1]);
+					if (!isNaN(levelLearned) && (levelLearned == mon.level)) {
+						//if levelLearned is a number && if we meet the level requirements to learn said move
+						var amountMovesHave = mon.moves.length;
+						if (amountMovesHave == 4) {
+							//different kind of prompt that asks what kind of move to replace
+							function prompty(errMsg) {
+								var msg = (errMsg || "") + "Your " + mon.species + " wants to learn a new move! (" + move.name + ") but you already have 4 moves. Would you like to replace a move?\n\n";
+								for (var i in mon.moves) msg += "(" + (Math.abs(i) + 1) + ") " + mon.moves[i] + "\n";
+								msg += "\nEnter the move you want to cancel or hit cancel.";
+								var learnOrNaw = prompt(msg);
+								if (typeof learnOrNaw == "string") {
+									var moveId = Math.abs(learnOrNaw) - 1;
+									if (isNaN(moveId) || moveId < 0 || moveId > 3) {
+										prompty("ERROR: '" + learnOrNaw + "' IS NOT AN OPTION.\n");
+									} else {
+										vars.me.learnMove(move.name, monKey, moveId);
+									}
+								}
+							}
+							prompty();
+						} else {
+							vars.me.learnMove(move.name, monKey, false);
+							alert("Your " + mon.species + " learned " + move.name + "!");
+						}
+					}
+				}
+			}
+		}
+	}
+};
 vars.me.gainExp = function(el, slot) {
 	var numMons = Object.keys(vars.me.expDivision).length,
 		expGain = 100;
@@ -111,7 +177,7 @@ vars.me.gainExp = function(el, slot) {
 	for (var monKey in vars.me.expDivision) {
 		var mon = vars.me.team[monKey];
 		mon.exp += expGain;
-		if (mon.exp > mon.nextLevelExp) {
+		if (mon.exp >= mon.nextLevelExp) {
 			mon.exp = mon.exp - mon.nextLevelExp;
 			mon.nextLevelExp += 50;
 			mon.level += 1;
@@ -121,7 +187,9 @@ vars.me.gainExp = function(el, slot) {
 				mon.exp = 0;
 				mon.nextLevelExp = 0;
 			}
-			alert("Your pokemon just leveled up to level " + mon.level + "(note to self -check if pokemon learns any moves / evolves on this level and if so ask player if they'd like to do shtuff)");
+			alert("Your pokemon just leveled up to level " + mon.level + ".");
+			vars.me.checkLearnMove(monKey);
+			vars.me.checkEvolve(monKey);
 		}
 	}
 	vars.me.expDivison = new Object();
@@ -580,14 +648,16 @@ $(function() {
 			if (key && !vars.me.encounteredMon) vars.gameControls("keydown" + key);
 
 			//if playing, focus on textbox when not battling to type
-			$('#invisitype').focus();
+			if (!vars.selectedInput) $('#invisitype').focus();
 			//if hit enter, send message
 			if (e.keyCode == 13) {
 				//send message
-				var msg = $('#invisitype').val();
+				var inputEl = $("#invisitype");
+				if (vars.selectedInput) inputEl = $(vars.selectedInput);
+				var msg = inputEl.val();
 				if (msg) {
 					client.send('/u s|' + msg);
-					$('#invisitype').val("");
+					inputEl.val("");
 				}
 			}
 		}
@@ -600,6 +670,10 @@ $(function() {
 		};
 		var key = keys[e.keyCode];
 		if (key && search.username) vars.gameControls("keyup" + key);
+	}).on("focus", "input, textarea", function() {
+		vars.selectedInput = this;
+	}).on("blur", "input, textarea", function() {
+		vars.selectedInput = false;
 	});
 })
 function chance(percent) {
