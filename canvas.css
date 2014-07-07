@@ -1,0 +1,87 @@
+body {
+	background: black;
+}
+#canvasContainer {
+	background: black;
+	float: left;
+}
+#canvasContainer .relative .canvas {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+#canvas .block {
+	float: left;
+}
+.spritePanel {
+	margin: 5px;
+	display: inline-block;
+}
+.sprites div {
+	background-color: yellow !important;
+}
+.sprites {
+	width: 400px;
+	height: 350px;
+	outline: 1px solid #b6b6b6;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.selectedSprite {
+	outline: 3px solid red;
+}
+#draggableSprite {
+	z-index: 2;
+	position: absolute;
+}
+#layer2 {
+	z-index: 1;
+}
+.negativeSprite {
+	-moz-box-shadow: inset blue 1px 1px 1px 1px;
+	-webkit-box-shadow: inset blue 1px 1px 1px 1px;
+	box-shadow: inset blue 1px 1px 1px 1px;
+}
+.player {
+	position: absolute;
+	z-index: 3;
+}
+.nametag {
+	position: absolute;
+	top: -16px;
+	left: 0;
+	font-size: 11px;
+	width: 50px;
+	overflow: hidden;
+	margin-left: -21px;
+	font-weight: bold;
+	text-shadow: 0px 0px white;
+	background: rgba(255, 255, 255, 0.6);
+	text-align: center;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.msgs {
+	display: none;
+	bottom: 36px;
+	top: auto;
+	width: 100px;
+	margin-left: -41px;
+	font-weight: normal;
+	background: rgba(255, 255, 255, 0.8);
+}
+#invisitype {
+	padding: 0;
+	margin: 0;
+	background: black;
+	border: none;
+	color: grey;
+	outline: none;
+}
+.expbar {
+	height: 4px;
+	margin-top: -4px;
+	position: absolute;
+	width: 50%;
+	background: rgb(0, 75, 158);
+}

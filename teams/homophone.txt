@@ -1,0 +1,59 @@
+=== Untitled ===
+
+Landorus-Therian (M) @ Leftovers
+Trait: Intimidate
+EVs: 252 HP / 4 Atk / 252 Def
+Impish Nature
+IVs: 30 Spd
+- Earthquake
+- U-turn
+- Stone Edge
+- Stealth Rock
+
+Venusaur @ Venusaurite
+Trait: Chlorophyll
+EVs: 252 HP / 252 SAtk / 4 Spd
+Modest Nature
+- Giga Drain
+- Sludge Bomb
+- Earthquake
+- Synthesis
+
+Florges (F) @ Leftovers
+Trait: Flower Veil
+EVs: 252 HP / 236 SDef / 20 Spd
+Calm Nature
+- Protect
+- Wish
+- Aromatherapy
+- Moonblast
+
+Skarmory @ Rocky Helmet
+Trait: Sturdy
+EVs: 252 HP / 208 Def / 48 Spd
+Impish Nature
+- Roost
+- Taunt
+- Drill Peck
+- Defog
+
+Talonflame @ Choice Band
+Trait: Gale Wings
+EVs: 4 HP / 252 Atk / 252 Spd
+Adamant Nature
+- Brave Bird
+- Flare Blitz
+- U-turn
+- Tailwind
+
+Mamoswine @ Life Orb
+Trait: Thick Fat
+EVs: 252 Atk / 4 Def / 252 Spd
+Jolly Nature
+IVs: 29 HP
+- Icicle Crash
+- Ice Shard
+- Earthquake
+- Stone Edge
+
+

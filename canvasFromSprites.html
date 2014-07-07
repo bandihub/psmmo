@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://play.pokemonshowdown.com/js/lib/jquery-2.1.0.min.js"></script>
+<script>
+var vars = {
+	//config
+	spritesURL: "./sprites.png",
+	blockWidth: 16,
+	blockHeight: 19,
+	selectionBorder: 4, //2px on each side
+	spriteSheet: {
+		width: 1940,
+		height: 1953
+	},
+	blocksShown: {
+		x: 31,
+		y: 21
+	},
+	sprites: new Array(),
+	map: [new Array(), new Array()],
+	//variables (subject to change), status, dragging
+	marginDrag: false,
+	lastMouseMove: false,
+	startSelection: false,
+	selectedSprite: false,
+	coloringBlocks: false,
+	mousingBlock: false,
+	blockWalk: false,
+	//functions
+	useSprite: function() {
+		var name = prompt("Enter the sprites name.");
+		if (!name) {
+			return false;
+		}
+		if ($(".editCanvas").css("display") == "none") $("#cropSprite").click();
+		var coordinates = {
+			x: Math.abs($("#startX").html()),
+			y: Math.abs($("#startY").html())
+		};
+		var dimensions = {
+			width: Math.abs($("#width").html()),
+			height: Math.abs($("#height").html())
+		};
+		var obj = new Object();
+		obj.coordinates = coordinates;
+		obj.dimensions = dimensions;
+		obj.name = name;
+		obj.css = "url(" + vars.spritesURL + ") " + (coordinates.x * -1) + "px " + (coordinates.y * -1) + "px";
+		obj.id = vars.sprites.length;
+		vars.sprites.push(obj);
+		vars.updateSprites();
+		return obj;
+	},
+	updateSprites: function() {
+		var insides = '';
+		for (var i in this.sprites) {
+			var sprite = this.sprites[i];
+			$("#styleScript" + i).remove();
+			insides += '<style id="styleScript' + i + '">';
+			insides += '.sprite' + i + ', .sprite-' + i + ' {';
+			insides += 'width: ' + sprite.dimensions.width + 'px;';
+			insides += 'height: ' + sprite.dimensions.height + 'px;';
+			insides += 'background: ' + sprite.css + ';';
+			insides += '}';
+			insides += '</style>';
+			insides += '<div style="background: ' + sprite.css + ';width: ' + sprite.dimensions.width + 'px;height: ' + sprite.dimensions.height + 'px;float: left;margin: 3px;" id="' + i + '"></div>';
+		}
+		$(".sprites").html(insides);
+	},
+	colorBlock: function(el) {
+		if (vars.selectedSprite) {
+			var selectedSprite = Math.abs(vars.selectedSprite);
+			if (vars.blockWalk) selectedSprite = selectedSprite * -1;
+			var id = el.id.replace("b", "");
+			var row = Math.abs(id.split('-')[0]),
+					column = Math.abs(id.split('-')[1]),
+					layer = 0,
+					negativeSprite = "";
+			if (selectedSprite < 0) negativeSprite = " negativeSprite";
+			vars.map[layer][column][row] = selectedSprite;
+			$(el).attr("class", "block sprite" + selectedSprite + negativeSprite);
+		}
+	},
+	exportCSSmap: function() {
+		var nonCircularMap = new Array();
+		for (var layer in vars.map) {
+			nonCircularMap.push(new Array());
+			if (layer == 0) nonCircularMap[layer] = vars.map[layer];
+			if (layer != 0) {
+				for (var x in vars.map[layer]) {
+					var sprite = vars.map[layer][x];
+					nonCircularMap[layer].push({
+						sprite: sprite.sprite,
+						column: sprite.column,
+						row: sprite.row
+					});
+				}
+			}
+		}
+		
+		var t = new Date() / 1;
+		var insides = '';
+		var css = '';
+		insides += '<div id="opaque' + t + '" onclick="$(this).remove();$(\'#baby' + t + '\').remove();" style="z-index: 99;cursor: pointer;width: 100%;height: 100%;background: white;opacity: 0.5;position: absolute;top: 0;left: 0;"></div>';
+		insides += '<div id="baby' + t + '" style="position: absolute;width: 50%;overflow-y: auto;overflow-x: hidden;max-height: 100%;margin-left: -25%;z-index: 100;left: 50%; top: 0;">';
+		insides += '<h2>Map (Javascript)</h2>';
+		insides += '<textarea class="exportTextarea" onclick="this.select();">vars.map = ' + JSON.stringify(nonCircularMap) + ';\n</textarea>';
+		insides += '<h2>Sprites (CSS)</h2>';
+		for (var i in this.sprites) {
+			var sprite = this.sprites[i];
+			css += '.sprite' + i + ', .sprite-' + i + ' {\n';
+			css += '\t/* ' + sprite.name + ' */\n';
+			css += '\twidth: ' + sprite.dimensions.width + 'px;\n';
+			css += '\theight: ' + sprite.dimensions.height + 'px;\n';
+			css += '\tbackground: ' + sprite.css + ';\n';
+			css += '}\n';
+		}
+		insides += '<textarea class="exportTextarea" onclick="this.select();">' + css + '</textarea>';
+		insides += '</div>';
+		$('body').append(insides);
+	},
+	importMap: function(mapJSON) {
+		vars.map = JSON.parse(mapJSON);
+		vars.updateMap();
+	},
+	updateMap: function() {
+		var halfBlocks = {
+			x: Math.floor(vars.blocksShown.x / 2),
+			y: Math.floor(vars.blocksShown.y / 2)
+		};
+		var visible = {
+			minX: vars.character.coordinates.x - halfBlocks.x,
+			maxX: vars.character.coordinates.x + halfBlocks.x,
+			minY: vars.character.coordinates.y - halfBlocks.y,
+			maxY: vars.character.coordinates.y + halfBlocks.y
+		};
+		var backgroundLayer = 0;
+		var layer = vars.map[backgroundLayer];
+		var canvasX = 0,
+				canvasY = 0;
+		for (var y = visible.minY; y < visible.maxY + 1; y++) {
+			for (var x = visible.minX; x < visible.maxX + 1; x++) {
+				var sprite = layer[y],
+						spriteClass = "";
+				if (sprite) sprite = sprite[x];
+				if (sprite !== undefined) if (sprite != 0) spriteClass = " sprite" + sprite;
+				if (sprite < 0) spriteClass += " negativeSprite";
+				$("#b" + canvasX + "-" + canvasY).attr("class", "block" + spriteClass);
+				canvasX++;
+			}
+			canvasY++;
+			canvasX = 0;
+		}
+		
+		
+		var currentLayer = 1;
+		var layer = vars.map[currentLayer];
+		var currentKey = 0;
+		for (var spriteKey in layer) {
+			var sprite = layer[spriteKey];
+			var newrow = (sprite.row - visible.minX),
+					newcolumn = (sprite.column - visible.minY);
+			var el = $('#layer' + currentLayer + '-' + currentKey);
+			if (!el.length) {
+				var block = {
+					left: newrow * vars.blockWidth,
+					top: newcolumn * vars.blockHeight
+				};
+				$("#layer" + currentLayer).append('<div id="layer' + currentLayer + '-' + currentKey + '" class="sprite' + sprite.sprite + '" style="position: absolute;top: ' + block.top + 'px;left: ' + block.left + 'px;"></div>');
+				sprite.el = $("#layer" + currentLayer + '-' + currentKey);
+			}
+			currentKey++;
+		}
+		//move layer
+		$("#layer" + currentLayer).css({
+			left: (halfBlocks.x - vars.character.coordinates.x) * vars.blockWidth,
+			top: (halfBlocks.y - vars.character.coordinates.y) * vars.blockHeight
+		});
+	},
+	addRow: function(prependOrAppend) {
+		var key = 0;
+		if (prependOrAppend > 0) key = vars.map[0].length;
+		var row = new Array();
+		for (var i in vars.map[0]) row.push(0);
+		if (prependOrAppend < 0) {
+			//prepending bumps everything up one in the sprite layer (1)
+			for (var i in vars.map[1]) {
+				var sprite = vars.map[1][i];
+				sprite.row++;
+				$(sprite.el).css({
+					top: $(sprite.el).position().top + vars.blockHeight + "px"
+				});
+			}
+		}
+		vars.map[0].splice(key, 0, row);
+	},
+	addColumn: function(prependOrAppend) {
+		var key = 0;
+		if (prependOrAppend > 0) key = vars.map[0][0].length;
+		for (var row in vars.map[0]) vars.map[0][row].splice(key, 0, 0);
+		if (prependOrAppend < 0) {
+			//prepending bumps everything up one in the sprite layer (1)
+			for (var i in vars.map[1]) {
+				var sprite = vars.map[1][i];
+				sprite.column = sprite.column - prependOrAppend;
+				$(sprite.el).css({
+					left: $(sprite.el).position().left - (vars.blockWidth * prependOrAppend) + "px"
+				});
+			}
+		}
+	}
+};
+vars.character = {
+	direction: false,
+	coordinates: {
+		x: Math.floor(vars.blocksShown.x / 2),
+		y: Math.floor(vars.blocksShown.y / 2)
+	},
+	cycle: 0,
+	cycleType: "walk",
+	x: 481,
+	y: 387,
+	directionsOrder: ["down", "left", "up", "right", /* walk */ "down", "left", "up", "right" /* run */],
+	walk: new Object(),
+	run: new Object(),
+};
+$(function() {
+	//add sprites
+	vars.sprites = [{"coordinates":{"x":0,"y":0},"dimensions":{"width":50,"height":50},"name":"blank","css":"url(./sprites.png) -1050px 0 black","id":0},{"coordinates":{"x":8,"y":1806},"dimensions":{"width":46,"height":23},"name":"grass","css":"url(./sprites.png) -8px -1806px","id":0},{"coordinates":{"x":99,"y":1853},"dimensions":{"width":22,"height":22},"name":"red design","css":"url(./sprites.png) -99px -1853px","id":1},{"coordinates":{"x":1140,"y":975},"dimensions":{"width":31,"height":16},"name":"water1","css":"url(./sprites.png) -1140px -975px","id":2},{"coordinates":{"x":1141,"y":1000},"dimensions":{"width":32,"height":16},"name":"water 2","css":"url(./sprites.png) -1141px -1000px","id":3},{"coordinates":{"x":845,"y":612},"dimensions":{"width":31,"height":45},"name":"tree","css":"url(./sprites.png) -845px -612px","id":4},{"coordinates":{"x":547,"y":1332},"dimensions":{"width":48,"height":50},"name":"grass","css":"url(./sprites.png) -547px -1332px","id":5},{"coordinates":{"x":152,"y":1803},"dimensions":{"width":60,"height":107},"name":"road","css":"url(./sprites.png) -152px -1803px","id":6},{"coordinates":{"x":793,"y":17},"dimensions":{"width":246,"height":178},"name":"inside cave","css":"url(./sprites.png) -793px -17px","id":7},{"coordinates":{"x":434,"y":196},"dimensions":{"width":64,"height":62},"name":"pokemart","css":"url(./sprites.png) -434px -196px","id":8},{"coordinates":{"x":505,"y":190},"dimensions":{"width":80,"height":70},"name":"pokemon center","css":"url(./sprites.png) -505px -190px","id":9},{"coordinates":{"x":726,"y":132},"dimensions":{"width":42,"height":46},"name":"fountain","css":"url(./sprites.png) -726px -132px","id":10},{"coordinates":{"x":907,"y":206},"dimensions":{"width":47,"height":64},"name":"blue house","css":"url(./sprites.png) -907px -206px","id":11},{"coordinates":{"x":997,"y":307},"dimensions":{"width":49,"height":70},"name":"beige house","css":"url(./sprites.png) -997px -307px","id":12},{"coordinates":{"x":274,"y":925},"dimensions":{"width":24,"height":24},"name":"snorlax","css":"url(./sprites.png) -274px -925px","id":13},{"coordinates":{"x":313,"y":900},"dimensions":{"width":20,"height":23},"name":"sudowoodo tree","css":"url(./sprites.png) -313px -900px","id":14},{"coordinates":{"x":348,"y":914},"dimensions":{"width":13,"height":14},"name":"bench or mushroom idk","css":"url(./sprites.png) -348px -914px","id":15},{"coordinates":{"x":62,"y":959},"dimensions":{"width":16,"height":15},"name":"flowers","css":"url(./sprites.png) -62px -959px","id":16},{"coordinates":{"x":208,"y":959},"dimensions":{"width":16,"height":16},"name":"flowers","css":"url(./sprites.png) -208px -959px","id":17},{"coordinates":{"x":350,"y":994},"dimensions":{"width":16,"height":30},"name":"tree","css":"url(./sprites.png) -350px -994px","id":18},{"coordinates":{"x":369,"y":989},"dimensions":{"width":32,"height":36},"name":"tree","css":"url(./sprites.png) -369px -989px","id":19},{"coordinates":{"x":184,"y":980},"dimensions":{"width":159,"height":49},"name":"flowers","css":"url(./sprites.png) -184px -980px","id":20},{"coordinates":{"x":23,"y":1114},"dimensions":{"width":47,"height":45},"name":"fountain","css":"url(./sprites.png) -23px -1114px","id":21},{"coordinates":{"x":1562,"y":1477},"dimensions":{"width":87,"height":79},"name":"water lake border","css":"url(./sprites.png) -1562px -1477px","id":22},{"coordinates":{"x":536,"y":598},"dimensions":{"width":54,"height":45},"name":"ground hole crater","css":"url(./sprites.png) -536px -598px","id":23},{"coordinates":{"x":1216,"y":383},"dimensions":{"width":79,"height":209},"name":"seviper serpent ladder","css":"url(./sprites.png) -1216px -383px","id":24},{"coordinates":{"x":897,"y":346},"dimensions":{"width":25,"height":21},"name":"sand background","css":"url(./sprites.png) -897px -346px","id":25},{"coordinates":{"x":851,"y":344},"dimensions":{"width":17,"height":22},"name":"sand background","css":"url(./sprites.png) -851px -344px","id":26},{"coordinates":{"x":940,"y":305},"dimensions":{"width":13,"height":11},"name":"rock","css":"url(./sprites.png) -940px -305px","id":27},{"coordinates":{"x":1303,"y":65},"dimensions":{"width":30,"height":22},"name":"sand background","css":"url(./sprites.png) -1303px -65px","id":28},{"coordinates":{"x":1448,"y":77},"dimensions":{"width":16,"height":17},"name":"rock sand background block","css":"url(./sprites.png) -1448px -77px","id":29},{"coordinates":{"x":1471,"y":78},"dimensions":{"width":17,"height":16},"name":"sand rock ground background","css":"url(./sprites.png) -1471px -78px","id":30}, {"coordinates":{"x":563,"y":1312},"dimensions":{"width":16,"height":19},"name":"wild grass","css":"url(./sprites.png) -563px -1312px","id":32}];
+	vars.updateSprites();
+	$(document).on("mousemove", function(e) {
+		vars.lastMouseMove = {
+			e: e
+		};
+		if (vars.marginDrag && !vars.startSelection) {
+			var el = $("#" + vars.marginDrag.el);
+			var differenceX = e.pageX - vars.marginDrag.e.pageX,
+					oldmarginX = Math.floor(el.css("margin-left").replace("px", "")),
+					differenceY = e.pageY - vars.marginDrag.e.pageY,
+					oldmarginY = Math.floor(el.css("margin-top").replace("px", ""));
+			var newmarginX = oldmarginX + differenceX,
+					newmarginY = oldmarginY + differenceY;
+			el.css({
+				"margin-left": newmarginX + "px",
+				"margin-top": newmarginY + "px"
+			});
+			var sel = $(".selection");
+			sel.css({
+				left: (sel.position().left + differenceX) + "px",
+				top: (sel.position().top + differenceY) + "px"
+			});
+			vars.marginDrag.e = e;
+		}
+		if (1 == 1) {
+			var el = $("#spritesheet");
+			var relative = {
+				x: e.pageX,
+				y: e.pageY
+			};
+			var css = {
+				leftMargin: Math.floor(el.css("margin-left").replace("px", "")),
+				topMargin: Math.floor(el.css("margin-top").replace("px", "")),
+				width: el.width(),
+				height: el.height()
+			};
+			var originalSizeDifferenceX = css.width / vars.spriteSheet.width;
+			var originalSizeDifferenceY = css.height / vars.spriteSheet.height;
+			relative.x = (e.pageX - css.leftMargin) / originalSizeDifferenceX;
+			relative.y = (e.pageY - css.topMargin) / originalSizeDifferenceY;
+			$("#X").html(Math.round(relative.x));
+			$("#Y").html(Math.round(relative.y));
+			vars.lastMouseMove.relativeSpriteSheetCoordinates = relative;
+		}
+		if (vars.startSelection && typeof relative != "undefined" && $("#startX").html() != "0") {
+			var dimensions = {
+				width: Math.round(Math.abs(Math.abs(relative.x) - Math.abs($("#startX").html()))),
+				height: Math.round(Math.abs(Math.abs(relative.y) - Math.abs($("#startY").html())))
+			};
+			var zoomedDimensions = {
+				width: dimensions.width * originalSizeDifferenceX,
+				height: dimensions.height * originalSizeDifferenceY
+			};
+			$("#width").html(dimensions.width);
+			$("#height").html(dimensions.height);
+			$(".selection").css({
+				width: zoomedDimensions.width - vars.selectionBorder + "px",
+				height: zoomedDimensions.height - vars.selectionBorder + "px"
+			});
+		}
+		if (vars.selectedSprite) {
+			//drag draggableSprite
+			if (vars.mousingBlock && vars.mousingBlock.id) {
+				var coordinates = new Object();
+				var id = vars.mousingBlock.id.replace("b", "");
+				var row = Math.abs(id.split('-')[0]);
+				var column = Math.abs(id.split('-')[1]) - (Math.ceil($("#draggableSprite").height() / vars.blockHeight)); //the minus is to make sure the mouse isn't on the sprite
+				vars.mousingBlock = $("#b" + row + "-" + column); //change the column of the vars.mousingBlock
+				if (column < 0) column = 0;
+				var canvas = $("#canvas");
+				coordinates.x = (row * vars.blockWidth) + canvas.offset().left;
+				coordinates.y = (column * vars.blockHeight);
+				$("#draggableSprite").css({
+					left: coordinates.x + "px",
+					top: coordinates.y + "px"
+				});
+			}
+		}
+	}).on("mouseup", function(e) {
+		vars.marginDrag = false;
+		if (vars.startSelection && vars.lastMouseMove.relativeSpriteSheetCoordinates) {
+			var coordinates = vars.lastMouseMove.relativeSpriteSheetCoordinates;
+			$("#endX").html(Math.round(coordinates.x));
+			$("#endY").html(Math.round(coordinates.y));
+		}
+		if (e.target.id != "startSelection") {
+			vars.startSelection = false;
+		}
+		$("#draggableSprite").hide();
+		if (vars.mousingBlock && !vars.coloringBlocks) {
+			var block = $(vars.mousingBlock);
+			var id = block.attr("id").replace("b", "");
+			var row = Math.abs(id.split('-')[0]);
+			var column = Math.abs(id.split('-')[1]);
+			var layer = 1;
+			$("#draggableSprite div").clone().css({
+				left: block.position().left + "px",
+				top: block.position().top + "px",
+				position: "absolute"
+			}).appendTo("#layer" + layer);
+			vars.map[layer].push({
+				sprite: Math.abs($("#draggableSprite div").attr("id")),
+				row: row,
+				column: column
+			});
+		}
+		vars.coloringBlocks = false;
+	}).on("mousewheel", ".selectSprite", function(e) {
+		var delta = event.wheelDelta || -event.detail,
+				amountZoom = 100,
+				plusorminus = 1;
+		if (delta < 0) plusorminus = plusorminus * -2;
+		var oldheight = Math.floor($("#spritesheet").css("width").replace("px", ""));
+		var newheight = oldheight + (plusorminus * amountZoom);
+		if (newheight < 25) newheight = 500;
+		$("#spritesheet").css({
+			"width": newheight + "px"
+		});
+		
+		$(".selection").hide();
+	}).on("mousedown", ".selectSprite", function(e) {
+		vars.marginDrag = {
+			el: "spritesheet",
+			e: e
+		};
+		e.preventDefault();
+		return false;
+	}).on("mousedown", "#spritesheet", function(e) {
+		if (vars.startSelection) {
+			var coordinates = vars.lastMouseMove.relativeSpriteSheetCoordinates;
+			$("#startX").html(Math.round(coordinates.x));
+			$("#startY").html(Math.round(coordinates.y));
+			$("#endX").html(0);
+			$("#endY").html(0);
+			$("#width").html(0);
+			$("#height").html(0);
+			$(".selection").css({
+				left: e.pageX + "px",
+				top: e.pageY + "px"
+			}).show();
+		}
+	});
+	$(document).keydown(function(e) {
+		var keys = {
+			37: "left",
+			38: "up",
+			39: "right",
+			40: "down"
+		};
+		var key = keys[e.keyCode];
+		if (key == "left" || key == "right" || key == "up" || key == "down") {
+			var direction = key;
+			var directionPlusOrMinus = {
+				right: 1,
+				left: -1,
+				up: -1,
+				down: 1
+			};
+			if (direction == "right" || direction == "left") vars.character.coordinates.x += 1 * directionPlusOrMinus[direction];
+			if (direction == "up" || direction == "down") vars.character.coordinates.y += 1 * directionPlusOrMinus[direction];
+			var plusorminus = 1;
+			if (directionPlusOrMinus[direction] < 0) plusorminus = -1;
+			var currentMinMaxView = {
+				x: vars.character.coordinates.x + (Math.floor(vars.blocksShown.x / 2) * plusorminus),
+				y: vars.character.coordinates.y + (Math.floor(vars.blocksShown.y / 2) * plusorminus)
+			};
+			var doesYexist = vars.map[0][currentMinMaxView.y];
+			if (!doesYexist) {
+				vars.addRow(plusorminus);
+			} else {
+				var doesXexist = doesYexist[currentMinMaxView.x];
+				if (!doesXexist) {
+					vars.addColumn(plusorminus);
+				}
+			}
+			vars.updateMap();
+		}
+	});
+})
+</script>
+<style>
+body, html {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	background: white !important;
+}
+.relative {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.selectSprite {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	display: none;
+}
+.selectSpritePanel {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	outline: 1px solid #b6b6b6;
+	background: white;
+	width: 200px;
+	padding: 5px;
+	opacity: 0.9;
+}
+.selectSpritePanel .labelrow {
+	width: 200px;
+	height: 23px;
+}
+.selectSpritePanel .label {
+	width: 50px;
+	float: left;
+	display: block;
+	font-weight: bold;
+	text-align: right;
+}
+.selectSpritePanel .labelVal {
+	width: 45px;
+	margin-left: 5px;
+	float: left;
+	display: block;
+}
+.selection {
+	border: 2px dashed red;
+	position: absolute;
+	z-index: 1;
+	display: none;
+}
+.exportTextarea {
+	width: 95%;
+	height: 250px;
+	margin: auto;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="./canvas.css" />
+</head>
+<body>
+	<div class="editCanvas">
+		<div id="canvasContainer">
+			<div class="relative" style="overflow: hidden;">
+				<div id="layer1" class="canvas"></div>
+				<div id="canvas" class="canvas"></div>
+			</div>
+		</div>
+		<div class="spritePanel">
+			Search Sprite: <input type="text" />
+			<div class="sprites"></div>
+			<button id="cropSprite">Crop a Sprite</button>
+			<button onclick="vars.exportCSSmap();">Export Map & CSS</button>
+			<label>Grid: <input type="checkbox" onchange="var b = 'default'; if (this.checked) {b = '1px solid red';} $('.block').css('outline', b);" /></label>
+			<label>blockWalk: <input type="checkbox" onchange="if (this.checked) {vars.blockWalk = true;} else {vars.blockWalk = false;}" /></label>
+			<button onclick="var imported = prompt('MAP javascript???');if (imported) vars.importMap(imported);">Import</button>
+		</div>
+	</div>
+	<script>
+	$(function() {
+		$("body").append('<style>#canvas .block {width: ' + vars.blockWidth + 'px !important;height: ' + vars.blockHeight + 'px !important;}</style>');
+		$("#canvasContainer").css({
+			width: vars.blockWidth * vars.blocksShown.x,
+			height: vars.blockHeight * vars.blocksShown.y
+		});
+		$("#canvasContainer").mouseover(function() {
+			$("#layer1").css("z-index", 0);
+			$("#canvas").css("opacity", 0.5);
+		}).mouseout(function() {
+			$("#layer1").css("z-index", 1);
+			$("#canvas").css("opacity", 1);
+		});
+		$("#cropSprite").click(function() {
+			if ($(".selectSprite").css("display") == "none") {
+				$(".selectSprite").show();
+				$(".selection").show();
+				$(".editCanvas").hide();
+			} else {
+				$(".selectSprite").hide();
+				$(".selection").hide();
+				$(".editCanvas").show();
+			}
+		});
+		$("body").on("mousedown", ".sprites div", function(e) {
+			vars.selectedSprite = this.id;
+			$(".selectedSprite").removeClass("selectedSprite");
+			$(this).addClass("selectedSprite");
+			$("#draggableSprite").html($(this).clone().removeClass("selectedSprite")).css({
+				left: e.pageX + "px",
+				top: e.pageY + "px"
+			}).show();
+			e.preventDefault();
+			return false;
+		}).on("mousedown", "#canvas div", function(e) {
+			vars.coloringBlocks = true;
+			vars.colorBlock(this);
+			e.preventDefault();
+			return false;
+		}).on("mouseover", "#canvas div", function() {
+			vars.mousingBlock = this;
+			if (vars.selectedSprite && vars.coloringBlocks) {
+				if (vars.sprites[vars.selectedSprite]) {
+					vars.colorBlock(this);
+				}
+			}
+		}).on("mouseout", "#canvas div", function() {
+			vars.mousingBlock = false;
+		});
+		var layer = 0;
+		for (var y = 0; y < vars.blocksShown.y; y++) for (var x = 0; x < vars.blocksShown.x; x++) {
+			if (!vars.map[layer][y]) vars.map[layer][y] = new Array();
+			vars.map[layer][y].push(0);
+			$("#canvas").append('<div id="b' + x + '-' + y + '" class="block"></div>');
+		}
+	})
+	</script>
+	<div class="selectSprite">
+		<div class="relative">
+			<div class="selectSpritePanel">
+				<strong style="font-size: 18px;">Spritesheet Coordinates</strong>
+				<div class="labelRow">
+					<span class="label">X:</span>
+					<span id="X" class="labelVal">0</span>
+					<span class="label">Y:</span>
+					<span id="Y" class="labelVal">0</span>
+				</div>
+				<center><hr />Selection Info<hr /></center>
+				<div class="labelRow">
+					<span class="label">startX:</span>
+					<span id="startX" class="labelVal">0</span>
+					<span class="label">startY:</span>
+					<span id="startY" class="labelVal">0</span>
+				</div>
+				<div class="labelRow">
+					<span class="label">endX:</span>
+					<span id="endX" class="labelVal">0</span>
+					<span class="label">endY:</span>
+					<span id="endY" class="labelVal">0</span>
+				</div>
+				<div class="labelRow">
+					<span class="label">Width:</span>
+					<span id="width" class="labelVal">0</span>
+					<span class="label">Height:</span>
+					<span id="height" class="labelVal">0</span>
+				</div>
+				<button id="startSelection" onmousedown="vars.startSelection = true;$('#startX').html(0);$('#startY').html(0);$('#endX').html(0);$('#endY').html(0);$('.selection').hide().height(0).width(0);">Select</button>
+				<button onclick="vars.useSprite();">Use Sprite</button>
+				<button onclick="$('#cropSprite').click();">Exit</button>
+			</div>
+			<img id="spritesheet" src="./sprites.png" style="margin-left: 0px;margin-top: 0px;" />
+		</div>
+	</div>
+	<div class="selection"></div>
+	<div id="draggableSprite"></div>
+</body>
+</html>

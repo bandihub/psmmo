@@ -1,0 +1,299 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+#header {
+	height: 41px;
+	background: #e6e6e6;
+	font-size: 25px;
+	width: 50%;
+}
+#header input {
+	height: 25px;
+}
+#results {
+	overflow: hidden;
+	background: #f6f6f6;
+	box-shadow: 0.1em 0.1em 0.5em 0.1em #e6e6e6;
+}
+.result {
+	list-style-type: none;
+	display: block;
+	clear: both;
+	word-wrap: normal;
+	height: 28px;
+	padding: 1px 1px 1px 5px;
+	margin: 0 5px 1px 5px;
+	border-radius: 4px;
+	padding: 1px 1px 1px 5px;
+	margin: 0 5px 1px 5px;
+	background: transparent;
+	cursor: pointer;
+	overflow: hidden;
+}
+.result:hover {
+	padding: 0px 0px 0px 4px;
+	border: 1px solid #D8D8D8;
+	background: #F8F8F8;
+}
+.result:first-child {
+	padding: 0px 0px 0px 4px;
+	border: 1px solid #D8D8D8;
+	background: #F8F8F8;
+}
+#results-scroll {
+	width: 30px;
+	background: black;
+	opacity: 0.5;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	border-radius: 10px;
+}
+#results-scroll:hover {
+	opacity: 0.6;
+}
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+#rightside {
+	position: absolute;
+	top: 0;
+	right: 0;
+	overflow: auto;
+}
+.col {
+	float: left;
+	padding-top: 6px;
+	height: 22px;
+	font-size: 9pt;
+	color: #444444;
+}
+.movenamecol {
+	padding-top: 5px;
+	height: 23px;
+	width: 152px;
+	color: #000000;
+	font-size: 10pt;
+}
+.labelcol {
+	text-align: center;
+	width: 30px;
+	margin-left: -2px;
+	margin-top: -8px;
+}
+.widelabelcol {
+	text-align: center;
+	width: 50px;
+	margin-top: -8px;
+}
+.pplabelcol {
+	text-align: center;
+	width: 18px;
+	padding-right: 5px;
+	margin-top: -8px;
+}
+.labelcol em, .widelabelcol em, .pplabelcol em, .statcol em, .bstcol em {
+	color: #999999;
+	font-size: 7pt;
+	font-style: normal;
+}
+.abilitydesccol {
+	white-space: nowrap;
+	padding-top: 7px;
+	font-size: 8pt;
+	width: 488px;
+	height: 21px;
+	overflow: hidden;
+	color: #777777;
+}
+.movedesccol {
+	width: 284px;
+}
+.numcol {
+	width: 18px;
+	padding-right: 5px;
+	text-align: right;
+	color: #999999;
+	padding-top: 7px;
+	font-size: 8pt;
+}
+.iconcol {
+	padding-top: 2px;
+}
+.iconcol span {
+	display: block;
+	width: 32px;
+	height: 24px;
+	background: transparent none no-repeat scroll 0px -8px;
+}
+.namecol {
+	padding-top: 5px;
+	height: 23px;
+	width: 120px;
+	color: #000000;
+	font-size: 10pt;
+}
+.pokemonnamecol {
+	padding-top: 5px;
+	height: 23px;
+	width: 127px;
+	color: #000000;
+	font-size: 10pt;
+}
+.typecol {
+	width: 70px;
+}
+.itemiconcol {
+	padding-top: 2px;
+}
+.itemdesccol {
+	width: 464px;
+}
+.itemiconcol span {
+	display: block;
+	width: 24px;
+	height: 24px;
+	background: transparent none no-repeat scroll 0px 0px;
+}
+.typecol img {
+	opacity: 0.5;
+	margin-right: 1px;
+}
+.twoabilitycol {
+	padding-top: 0;
+	height: 28px;
+	font-size: 8pt;
+	width: 90px;
+}
+.abilitycol {
+	padding-top: 7px;
+	height: 21px;
+	font-size: 8pt;
+	width: 90px;
+}
+.statcol {
+	padding-top: 0;
+	height: 28px;
+	width: 24px;
+	text-align: right;
+	font-size: 8pt;
+}
+.statcol em {
+	color: #999999;
+	font-size: 7pt;
+	font-style: normal;
+}
+.editmon {
+	height: 100%;
+	font-size: 1.2em;
+	color: #777777;
+	line-height: 1.5em;
+}
+.editmon span {
+	color: black;
+}
+.customedits {
+	display: none;
+}
+.editmon span  {
+	background: #f6f6f6;
+	outline: 1px solid #b6b6b6;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+.teambar button:disabled, .teambar button:disabled:hover, .teambar button:disabled:active {
+	color: #000000;
+	background: #FCFCFC;
+	border-color: #AAAAAA;
+	opacity: .5;
+	cursor: default;
+}
+.teambar button {
+	display: block;
+	background: #F3F3F3;
+	border: 1px solid #AAAAAA;
+	padding: 0;
+	margin: -1px -1px 0 0;
+	height: 42px;
+	float: left;
+	width: 88px;
+	cursor: pointer;
+	white-space: pre;
+	font-size: 8pt;
+	font-family: Verdana,Arial,sans-serif;
+}
+.pokemonicon {
+	display: block;
+	width: 32px;
+	height: 24px;
+	margin: auto;
+}
+.link {
+	color: #224488;
+}
+.link:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #6688CC;
+}
+.evc {
+	display: inline-block;
+}
+.pullylabel {
+	width: 60px;
+	float: left;
+	text-align: right;
+	padding-right: 7px;
+}
+.pully {
+	float: left;
+	width: 100%;
+	height: 10px;
+	background: rgb(146, 146, 146);
+	margin-top: 5px;
+}
+.pullycontainer {
+	width: 252px;
+	height: 100%;
+	position: relative;
+	float: left;
+}
+.pullyval {
+	position: absolute;
+	background: black;
+	color: white;
+	padding: 2px;
+	cursor: pointer;
+	left: 0;
+	font-size: 10px;
+	text-align: center;
+	width: 15px;
+	margin-top: 2px;
+	margin-left: -7.5px;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em 0.1em black;
+	font-weight: bold;
+}
+.pullystatval {
+	float: left;
+	width: 40px;
+	text-align: right;
+}
+.statline {
+	padding-top: 37px;
+}
+.red {
+	color: red;
+	font-weight: bold;
+}
+ul {
+	margin: 0;
+}

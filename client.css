@@ -1,0 +1,270 @@
+.right {
+	float: right;
+}
+.left {
+	float: left;
+}
+.users {
+	height: 80%;
+	width: 150px;
+	outline: 1px solid #b6b6b6;
+	background: teal;
+	float: left;
+	overflow: auto;
+	overflow-x: hidden;
+}
+.logs  {
+	height: 80%;
+	background: white;
+	margin-left: 150px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.chatmessage {
+	width: 100%;
+	height: 20%;
+	padding: 0;
+	margin: 0;
+	outline: 1px solid #b6b6b6;
+	background: #f6f6f6;
+	font-size: 25px;
+	font-family: times new roman;
+	border: none;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	min-height: 40px;
+}
+.gototeambuilder {
+	position: absolute;
+	right: 1%;
+	background: white;
+	font-weight: bold;
+	box-shadow: 0em 0em 0em 2px black;
+	padding: 20px;
+	opacity: 0.75;
+	border-radius: 50px;
+	cursor: pointer;
+	text-shadow: 0.1em 0.1em silver;
+}
+.gototeambuilder:hover {
+	opacity: 1;
+}
+.relative {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.logs div {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.logs div em {
+	font-style: normal !important;
+}
+.nightclub {
+	background: black;
+	margin-right: -5px !important;
+	margin-left: -5px !important;
+}
+.backtochat {
+	position: absolute;
+	bottom: 2px;
+	right: 301px;
+	z-index: 2;
+	padding: 20px;
+	margin-top: -10px;
+	background: white;
+	font-weight: bold;
+	box-shadow: 0em 0em 0em 2px black;
+	opacity: 0.75;
+	border-radius: 50px;
+	cursor: pointer;
+	text-shadow: 0.1em 0.1em silver;
+}
+.user {
+	height: 19px;
+	border-bottom: 1px solid #CCCCCC;
+	color: white;
+	text-shadow: 0.1em 0.1em black;
+	cursor: pointer;
+}
+.user:hover {
+	background: rgb(0, 168, 168);
+}
+.pmbox {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	margin-left: -167.5px;
+	z-index: 15;
+	background: white;
+	opacity: 0.9;
+	outline: 1px solid #b6b6b6;
+	width: 335px;
+	height: 150px;
+}
+.pmheader {
+	background: #e6e6e6;
+	cursor: pointer;
+	margin-top: -22px;
+	height: 21px;
+	border-radius: 10px 10px 0px 0px;
+	text-align: center;
+	background: rgb(106, 223, 197);
+}
+.pmexit {
+	float: right;
+	color: red;
+	font-weight: bold;
+	text-align: right;
+}
+.pmlogs {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 100%;
+	background: rgb(237, 255, 251);
+}
+.pminput {
+	margin: 0;
+	padding: 0;
+	width: 75%;
+	border: none;
+	outline: none;
+	box-shadow: 0em 0em 0em 1px #b6b6b6;
+	background: rgb(199, 255, 242);
+}
+.pmbox button {
+	width: 24%;
+	margin-left: 1%;
+}
+.alive {
+	cursor: pointer;
+}
+.dead {
+	opacity: 0.5;
+}
+.cancelbutton {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: white;
+	width: 58px;
+	height: 24px;
+	opacity: 0.9;
+	cursor: pointer;
+	display: none;
+}
+.cancelbutton:hover {
+	opacity: 1;
+}
+.challenges {
+	position: absolute;
+	bottom: 3px;
+	right: 3px;
+	z-index: 12;
+	width: 323px;
+}
+.challenge {
+	cursor: default;
+	width: 300px;
+	height: 80px;
+	background: rgb(244, 255, 255);
+	border-radius: 10px;
+	padding: 10px;
+	border: 1px solid black;
+}
+.challengeHeader {
+	background: white;
+	opacity: 0.6;
+	border-radius: 10px 10px 0px 0px;
+	margin:-10px;
+	margin-bottom: 0px;
+	border-bottom: 1px solid black;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}
+.teamselection {
+	height: 26px;
+	width: 100%;
+}
+#broadcast-containment {
+	z-index: 12;
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	width: 455px;
+	margin-left: -222.5px;
+	display: none;
+}
+#broadcast {
+	width: 455px;
+	height: 255px;
+	padding: 0px;
+	margin: 0;
+	border: none;
+}
+.spoiler {
+	color: #E2E2E2;
+	background: #E2E2E2;
+	border: 1px solid #777777;
+	padding: 0px 3px;
+}
+.spoiler:hover {
+	color: #000000;
+	background: #E2E2E2;
+	border: 0px solid #AAAAAA;
+	padding: 1px 4px;
+}
+.registry {
+	position: absolute;
+	z-index: 24;
+	width: 600px;
+	height: 100%;
+	background: rgb(243, 239, 255);
+	margin-left: -210px;
+	left: 50%;
+	overflow: auto;
+	outline: 1px solid #b6b6b6;
+}
+.registry a {
+	color: rgb(164, 91, 221);
+}
+.registry a:hover {
+	color: rgb(143, 0, 255);
+}
+.registry h1 {
+	color: rgb(143, 0, 255);
+}
+.registryopaqueness {
+	background: rgba(255, 255, 255, 0.8);
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 23;
+	font-weight: bold;
+	text-shadow: 0.1em 0.1em white;
+	font-size: 18px;
+}
+.opaque {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: white;
+	opacity: 0.5;
+}
+.challengebox {
+	z-index: 16;
+	position: absolute;
+	left: 50%;
+	width: 300px;
+	text-align: center;
+	background: rgb(220, 233, 253);
+	margin-left: -200px;
+}

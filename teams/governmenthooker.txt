@@ -1,0 +1,285 @@
+=== celetar ===
+
+Aegislash (M) @ Leftovers
+Trait: Stance Change
+EVs: 96 HP / 144 Atk / 252 SAtk / 16 Spd
+Quiet Nature
+- Shadow Ball
+- Shadow Sneak
+- Sacred Sword
+- King's Shield
+
+Celebi @ Leftovers
+Trait: Natural Cure
+EVs: 252 HP / 252 Def / 4 SAtk
+Bold Nature
+- Substitute
+- Recover
+- Baton Pass
+- Giga Drain
+
+Tyranitar (M) @ Tyranitarite
+Trait: Sand Stream
+EVs: 4 HP / 252 Atk / 252 Spd
+Jolly Nature
+- Stone Edge
+- Crunch
+- Earthquake
+- Dragon Dance
+
+Rotom-Wash @ Leftovers
+Trait: Levitate
+EVs: 252 HP / 252 Def / 4 SAtk
+Bold Nature
+- Will-O-Wisp
+- Volt Switch
+- Hydro Pump
+- Pain Split
+
+Forretress (M) @ Leftovers
+Trait: Sturdy
+EVs: 252 HP / 104 Def / 152 SAtk
+Relaxed Nature
+- Stealth Rock
+- Hidden Power [Ice]
+- Rapid Spin
+- Volt Switch
+
+Latios (M) @ Life Orb
+Trait: Levitate
+EVs: 4 HP / 252 SAtk / 252 Spd
+Timid Nature
+- Psyshock
+- Surf
+- Draco Meteor
+- Recover
+
+
+=== shurt dave offense ===
+
+Diggersby (M) @ Focus Sash
+Trait: Pickup
+EVs: 252 Atk / 252 Spd
+Adamant Nature
+- Swords Dance
+- Earthquake
+- Quick Attack
+- Return
+
+Aerodactyl (M) @ Aerodactylite
+Trait: Unnerve
+EVs: 252 Atk / 4 Def / 252 Spd
+Adamant Nature
+- Aerial Ace
+- Earthquake
+- Ice Fang
+- Stone Edge
+
+Thundurus (M) @ Life Orb
+Trait: Prankster
+EVs: 4 Def / 252 SAtk / 252 Spd
+Timid Nature
+- Nasty Plot
+- Thunderbolt
+- Hidden Power [Flying]
+- Focus Blast
+
+Aegislash (M) @ Leftovers
+Trait: Stance Change
+EVs: 96 HP / 144 Atk / 252 SAtk / 16 Spd
+Quiet Nature
+- Shadow Ball
+- Shadow Sneak
+- Sacred Sword
+- King's Shield
+
+Latios (M) @ Life Orb
+Trait: Levitate
+EVs: 4 Def / 252 SAtk / 252 Spd
+Timid Nature
+- Defog
+- Draco Meteor
+- Surf
+- Thunderbolt
+
+Toxicroak (M) @ Life Orb
+Trait: Dry Skin
+EVs: 252 Atk / 4 Def / 252 Spd
+Adamant Nature
+- Swords Dance
+- Drain Punch
+- Gunk Shot
+- Sucker Punch
+
+
+=== crazy balanced ===
+
+Garchomp (M) @ Leftovers
+Trait: Rough Skin
+EVs: 252 Atk / 4 Def / 252 Spd
+Jolly Nature
+- Earthquake
+- Outrage
+- Stealth Rock
+- Swords Dance
+
+Venusaur (M) @ Venusaurite
+Trait: Overgrow
+EVs: 252 HP / 68 Def / 188 SDef
+Relaxed Nature
+- Giga Drain
+- Sludge Bomb
+- Earthquake
+- Synthesis
+
+Bisharp (M) @ Black Glasses
+Trait: Defiant
+EVs: 252 Atk / 4 SDef / 252 Spd
+Adamant Nature
+- Pursuit
+- Sucker Punch
+- Iron Head
+- Knock Off
+
+Azumarill (M) @ Choice Band
+Trait: Huge Power
+EVs: 252 HP / 252 Atk / 4 SDef
+Adamant Nature
+- Aqua Jet
+- Waterfall
+- Play Rough
+- Superpower
+
+Zapdos @ Leftovers
+Trait: Pressure
+EVs: 248 HP / 244 Def / 16 Spd
+Bold Nature
+- Volt Switch
+- Defog
+- Heat Wave
+- Roost
+
+Blissey (F) @ Leftovers
+Trait: Natural Cure
+EVs: 252 HP / 252 Def / 4 SDef
+Bold Nature
+- Wish
+- Protect
+- Toxic
+- Seismic Toss
+
+
+=== manyoff ===
+
+Tyranitar @ Tyranitarite
+Trait: Sand Stream
+EVs: 4 HP / 252 Atk / 252 Spd
+Jolly Nature
+- Dragon Dance
+- Crunch
+- Stone Edge
+- Earthquake
+
+Celebi @ Leftovers
+Trait: Natural Cure
+EVs: 252 HP / 252 Def / 4 SDef
+Bold Nature
+- Recover
+- Substitute
+- Baton Pass
+- Giga Drain
+
+Terrakion @ Life Orb
+Trait: Justified
+EVs: 252 Atk / 4 SDef / 252 Spd
+Jolly Nature
+- Taunt
+- Swords Dance
+- Stone Edge
+- Close Combat
+
+Skarmory @ Rocky Helmet
+Trait: Sturdy
+EVs: 252 HP / 232 Def / 24 Spd
+Impish Nature
+- Roost
+- Stealth Rock
+- Defog
+- Brave Bird
+
+Azumarill @ Choice Band
+Trait: Huge Power
+EVs: 168 HP / 252 Atk / 4 Def / 84 Spd
+Adamant Nature
+- Aqua Jet
+- Play Rough
+- Waterfall
+- Superpower
+
+Thundurus (M) @ Life Orb
+Trait: Prankster
+EVs: 4 HP / 252 SAtk / 252 Spd
+Timid Nature
+- Nasty Plot
+- Thunderbolt
+- Focus Blast
+- Hidden Power [Ice]
+
+
+=== atypical ===
+
+Greninja @ Life Orb
+Trait: Torrent
+EVs: 4 Atk / 252 SAtk / 252 Spd
+Hasty Nature
+- Hydro Pump
+- U-turn
+- Ice Beam
+- Dark Pulse
+
+Landorus-Therian (M) @ Leftovers
+Trait: Intimidate
+EVs: 252 HP / 252 Atk / 4 Def
+Adamant Nature
+- Earthquake
+- Stone Edge
+- U-turn
+- Gravity
+
+Tyranitar @ Assault Vest
+Trait: Sand Stream
+EVs: 252 HP / 4 Atk / 252 SDef
+Careful Nature
+- Crunch
+- Pursuit
+- Stone Edge
+- Superpower
+
+Salamence @ Leftovers
+Trait: Intimidate
+EVs: 252 HP / 252 Def / 4 SAtk
+Bold Nature
+- Wish
+- Protect
+- Draco Meteor
+- Fire Blast
+
+Excadrill @ Air Balloon
+Trait: Sand Rush
+EVs: 252 Atk / 4 Def / 252 Spd
+Adamant Nature
+- Earthquake
+- Rapid Spin
+- Rock Slide
+- Swords Dance
+
+Celebi @ Choice Scarf
+Trait: Natural Cure
+EVs: 4 Atk / 252 SAtk / 252 Spd
+Timid Nature
+- Stealth Rock
+- Leaf Storm
+- U-turn
+- Trick
+
+

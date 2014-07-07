@@ -1,0 +1,198 @@
+.sprite0, .sprite-0 {
+	/* blank */
+	width: 50px;
+	height: 50px;
+	background: url(./sprites.png) -1050px 0 black;
+}
+.sprite1, .sprite-1 {
+	/* grass */
+	width: 46px;
+	height: 23px;
+	background: url(./sprites.png) -8px -1806px;
+}
+.sprite2, .sprite-2 {
+	/* red design */
+	width: 22px;
+	height: 22px;
+	background: url(./sprites.png) -99px -1853px;
+}
+.sprite3, .sprite-3 {
+	/* water1 */
+	width: 31px;
+	height: 16px;
+	background: url(./sprites.png) -1140px -975px;
+}
+.sprite4, .sprite-4 {
+	/* water 2 */
+	width: 32px;
+	height: 16px;
+	background: url(./sprites.png) -1141px -1000px;
+}
+.sprite5, .sprite-5 {
+	/* tree */
+	width: 31px;
+	height: 45px;
+	background: url(./sprites.png) -845px -612px;
+}
+.sprite6, .sprite-6 {
+	/* grass */
+	width: 48px;
+	height: 50px;
+	background: url(./sprites.png) -547px -1332px;
+}
+.sprite7, .sprite-7 {
+	/* road */
+	width: 60px;
+	height: 107px;
+	background: url(./sprites.png) -152px -1803px;
+}
+.sprite8, .sprite-8 {
+	/* inside cave */
+	width: 246px;
+	height: 178px;
+	background: url(./sprites.png) -793px -17px;
+}
+.sprite9, .sprite-9 {
+	/* pokemart */
+	width: 64px;
+	height: 62px;
+	background: url(./sprites.png) -434px -196px;
+}
+.sprite10, .sprite-10 {
+	/* pokemon center */
+	width: 80px;
+	height: 70px;
+	background: url(./sprites.png) -505px -190px;
+}
+.sprite11, .sprite-11 {
+	/* fountain */
+	width: 42px;
+	height: 46px;
+	background: url(./sprites.png) -726px -132px;
+}
+.sprite12, .sprite-12 {
+	/* blue house */
+	width: 47px;
+	height: 64px;
+	background: url(./sprites.png) -907px -206px;
+}
+.sprite13, .sprite-13 {
+	/* beige house */
+	width: 49px;
+	height: 70px;
+	background: url(./sprites.png) -997px -307px;
+}
+.sprite14, .sprite-14 {
+	/* snorlax */
+	width: 24px;
+	height: 24px;
+	background: url(./sprites.png) -274px -925px;
+}
+.sprite15, .sprite-15 {
+	/* sudowoodo tree */
+	width: 20px;
+	height: 23px;
+	background: url(./sprites.png) -313px -900px;
+}
+.sprite16, .sprite-16 {
+	/* bench or mushroom idk */
+	width: 13px;
+	height: 14px;
+	background: url(./sprites.png) -348px -914px;
+}
+.sprite17, .sprite-17 {
+	/* flowers */
+	width: 16px;
+	height: 15px;
+	background: url(./sprites.png) -62px -959px;
+}
+.sprite18, .sprite-18 {
+	/* flowers */
+	width: 16px;
+	height: 16px;
+	background: url(./sprites.png) -208px -959px;
+}
+.sprite19, .sprite-19 {
+	/* tree */
+	width: 16px;
+	height: 30px;
+	background: url(./sprites.png) -350px -994px;
+}
+.sprite20, .sprite-20 {
+	/* tree */
+	width: 32px;
+	height: 36px;
+	background: url(./sprites.png) -369px -989px;
+}
+.sprite21, .sprite-21 {
+	/* flowers */
+	width: 159px;
+	height: 49px;
+	background: url(./sprites.png) -184px -980px;
+}
+.sprite22, .sprite-22 {
+	/* fountain */
+	width: 47px;
+	height: 45px;
+	background: url(./sprites.png) -23px -1114px;
+}
+.sprite23, .sprite-23 {
+	/* water lake border */
+	width: 87px;
+	height: 79px;
+	background: url(./sprites.png) -1562px -1477px;
+}
+.sprite24, .sprite-24 {
+	/* ground hole crater */
+	width: 54px;
+	height: 45px;
+	background: url(./sprites.png) -536px -598px;
+}
+.sprite25, .sprite-25 {
+	/* seviper serpent ladder */
+	width: 79px;
+	height: 209px;
+	background: url(./sprites.png) -1216px -383px;
+}
+.sprite26, .sprite-26 {
+	/* sand background */
+	width: 25px;
+	height: 21px;
+	background: url(./sprites.png) -897px -346px;
+}
+.sprite27, .sprite-27 {
+	/* sand background */
+	width: 17px;
+	height: 22px;
+	background: url(./sprites.png) -851px -344px;
+}
+.sprite28, .sprite-28 {
+	/* rock */
+	width: 13px;
+	height: 11px;
+	background: url(./sprites.png) -940px -305px;
+}
+.sprite29, .sprite-29 {
+	/* sand background */
+	width: 30px;
+	height: 22px;
+	background: url(./sprites.png) -1303px -65px;
+}
+.sprite30, .sprite-30 {
+	/* rock sand background block */
+	width: 16px;
+	height: 17px;
+	background: url(./sprites.png) -1448px -77px;
+}
+.sprite31, .sprite-31 {
+	/* sand rock ground background */
+	width: 17px;
+	height: 16px;
+	background: url(./sprites.png) -1471px -78px;
+}
+.sprite32, .sprite-32 {
+	/* wild grass */
+	width: 16px;
+	height: 19px;
+	background: url(./sprites.png) -563px -1312px;
+}
