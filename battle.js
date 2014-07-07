@@ -22,6 +22,7 @@ var Battle = function(roomid, type, nojoin) {
 	insides += '<div id="' + roomid + 'users" style="width: 250px;" class="users"></div>';
 	insides += '<div id="' + roomid + 'logs" class="logs"></div>';
 	insides += '<textarea id="' + roomid + 'chatmessage" class="chatmessage" style="width: ' + ($("body").width() - 250) + 'px;margin-left: 250px;"></textarea>';
+	insides += '<a class="closeX" id="closeX" onclick="client.send(\'/leave\', \'' + roomid + '\');">&#10006;</a>';
 	insides += '</div></div>';
 	chatholder.append(insides);
 	if ($("body").width() > 550 * 1.5 && $("body").height() > 330 * 1.5) {
