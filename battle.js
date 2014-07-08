@@ -22,7 +22,7 @@ var Battle = function(roomid, type, nojoin) {
 	insides += '<div id="' + roomid + 'users" style="width: 250px;" class="users"></div>';
 	insides += '<div id="' + roomid + 'logs" class="logs"></div>';
 	insides += '<textarea id="' + roomid + 'chatmessage" class="chatmessage" style="width: ' + ($("body").width() - 250) + 'px;margin-left: 250px;"></textarea>';
-	insides += '<a class="closeX" id="closeX" onclick="client.send(\'/leave\', \'' + roomid + '\');">&#10006;</a>';
+	insides += '<a class="closeX" id="closeX'+roomid'" onclick="client.send(\'/leave\', \'' + roomid + '\');">&#10006;</a>';
 	insides += '</div></div>';
 	chatholder.append(insides);
 	if ($("body").width() > 550 * 1.5 && $("body").height() > 330 * 1.5) {
@@ -669,7 +669,7 @@ var Battle = function(roomid, type, nojoin) {
 				if (row[2] == "Substitute") this.battle[playernumA].substitute = (row[0] == "-start") ? true : false;
 				this.toTimeline({event: row[0], player: playernumA, who: this.who(playernumA), substitute: this.battle[playernumA].substitute});
 			} else if (row[0] == "win") {
-				this.toTimeline({event: row[0], msg: "<div><b>" + row[1] + "</b> won the battle. " + 'The battle is over. Click <button onclick="client.send(\'/leave\', \'' + this.id + '\');">here</button> to leave the battle.' + "</div>"});
+				this.toTimeline({event: row[0], msg: "<div><b>" + row[1] + "</b> won the battle. </div>"});
 				var plusorminus = -1;
 				if (row[0] == this.battle[this.battle.you].name) plusorminus = 1;
 				vars.me.money += 100 * plusorminus;
@@ -677,6 +677,7 @@ var Battle = function(roomid, type, nojoin) {
 				if (vars.me.money < 0) vars.me.money = 0;
 				this.toTimeline({event: row[0], msg: "You " + ((plusorminus == 1) ? "won" : "lost") + ". You now have $" + vars.me.money + "."});
 				this.battle.finished = true;
+				$('#closeX' + this.id).click()
 			} else if (row[0] == "request") {
 				var objecto = (JSON.parse(row[1]));
 				for (var i in objecto) this.battle[i] = objecto[i];
